@@ -7,7 +7,7 @@
   font-family: 'Lilita One', sans-serif;
 }
 
-/* convert 1 ram to 10px */
+/* convert 1rem to 10px */
 html {
   font-size: 62.5%;
 }
