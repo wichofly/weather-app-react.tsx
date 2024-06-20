@@ -1,3 +1,5 @@
+import './WeatherApp.css';
+
 import sunny from '../assets/sunny.png';
 import cloudy from '../assets/cloudy.png';
 import rainy from '../assets/rainy.png';
