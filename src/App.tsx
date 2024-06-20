@@ -1,13 +1,12 @@
-
-import './App.css'
+import WeatherApp from './components/WeatherApp';
+import './App.css';
 
 function App() {
-
   return (
     <>
-      <h1>Hello beautiful Weather!</h1>
+      <WeatherApp />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
