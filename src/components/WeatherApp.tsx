@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import './WeatherApp.css';
 
 import sunny from '../assets/sunny.png';
@@ -6,6 +7,17 @@ import rainy from '../assets/rainy.png';
 import snowy from '../assets/snowy.png';
 
 const WeatherApp = () => {
+  const [data, setData] = useState({});
+
+  const api_key = 'b46d2bff9c7d8d90bbd5bcbb7e286719';
+
+  const apiUrl = async () => {
+    const baseURL = `https://api.openweathermap.org/data/2.5/weather?q=Munich&units=Metric&appid=${api_key}`;
+    const response = await fetch(baseURL);
+    const searchData = await response.json();
+    console.log(searchData);
+  };
+
   return (
     <div className="container">
       <div className="weather-app">
@@ -16,7 +28,7 @@ const WeatherApp = () => {
           </div>
           <div className="search-bar">
             <input type="text" placeholder="Enter city name" />
-            <i>🔍</i>
+            <i onClick={apiUrl}>🔍</i>
           </div>
         </div>
 
