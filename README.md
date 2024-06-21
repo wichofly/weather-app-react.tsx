@@ -1,6 +1,6 @@
 # Weather Project with React and TS
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This template provides the weather for each location you are insterested to see. 
 
 Currently, two official plugins are available:
 
