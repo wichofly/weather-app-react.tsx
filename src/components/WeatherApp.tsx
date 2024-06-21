@@ -6,8 +6,22 @@ import cloudy from '../assets/cloudy.png';
 import rainy from '../assets/rainy.png';
 import snowy from '../assets/snowy.png';
 
+interface Prop {
+  name: string;
+  main: {
+    temp: number;
+    humidity: number;
+  };
+  weather: {
+    main: string;
+  }[];
+  wind: {
+    speed: number;
+  };
+}
+
 const WeatherApp = () => {
-  const [data, setData] = useState({});
+  const [data, setData] = useState<Prop | null>(null);
   const [location, setLocation] = useState('');
 
   const api_key = 'b46d2bff9c7d8d90bbd5bcbb7e286719';
@@ -19,7 +33,7 @@ const WeatherApp = () => {
   const apiUrl = async () => {
     // Check if location is empty or contains only whitespace
     if (!location.trim()) return;
-    
+
     const baseURL = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=Metric&appid=${api_key}`;
     const response = await fetch(baseURL);
     const searchData = await response.json();
@@ -41,7 +55,7 @@ const WeatherApp = () => {
         <div className="search">
           <div className="search-top">
             <i className="fa-solid fa-location-dot"></i>
-            <div className="location">{data.name || 'Location'}</div>
+            <div className="location">{(data && data.name) || 'Location'}</div>
           </div>
           <div className="search-bar">
             <input
@@ -58,10 +72,10 @@ const WeatherApp = () => {
         <div className="weather">
           <img src={sunny} alt="sunny" />
           <div className="weather-type">
-            {data.weather ? data.weather[0].main : 'Weather'}
+            {data && data.weather ? data.weather[0].main : 'Weather'}
           </div>
           <div className="temp">
-            {data.main ? `${Math.floor(data.main.temp)}` : '0'}°C
+            {data && data.main ? `${Math.floor(data.main.temp)}` : '0'}°C
           </div>
         </div>
 
@@ -73,13 +87,22 @@ const WeatherApp = () => {
           <div className="humidity">
             <div className="data-name">Humidity</div>
             <i>💧</i>
-            <div className="data">{data.main ? data.main.humidity: '0'}%</div>
+            <div className="data">
+              {data && data.main ? data.main.humidity : '0'}%
+            </div>
           </div>
 
+          {/* Another way to do it */}
           <div className="wind">
-            <div className="data-name">Wind</div>
-            <i>💨</i>
-            <div className="data">{data.wind ? data.wind.speed : '0'} km/h</div>
+            {data && data.wind ? (
+              <>
+                <div className="data-name">Wind</div>
+                <i>💨</i>
+                <div className="data">{data.wind.speed} km/h</div>
+              </>
+            ) : (
+              <div className="data-name">No wind data available</div>
+            )}
           </div>
         </div>
       </div>
