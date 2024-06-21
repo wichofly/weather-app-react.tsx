@@ -17,6 +17,9 @@ const WeatherApp = () => {
   // };
 
   const apiUrl = async () => {
+    // Check if location is empty or contains only whitespace
+    if (!location.trim()) return;
+    
     const baseURL = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=Metric&appid=${api_key}`;
     const response = await fetch(baseURL);
     const searchData = await response.json();
@@ -76,7 +79,7 @@ const WeatherApp = () => {
           <div className="wind">
             <div className="data-name">Wind</div>
             <i>💨</i>
-            <div className="data">12 km/h</div>
+            <div className="data">{data.wind ? data.wind.speed : '0'} km/h</div>
           </div>
         </div>
       </div>
