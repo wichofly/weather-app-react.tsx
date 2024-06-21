@@ -85,11 +85,15 @@ const WeatherApp = () => {
 
         <div className="weather-data">
           <div className="humidity">
-            <div className="data-name">Humidity</div>
-            <i>💧</i>
-            <div className="data">
-              {data && data.main ? data.main.humidity : '0'}%
-            </div>
+            {data && data.main ? (
+              <>
+                <div className="data-name">Humidity</div>
+                <i>💧</i>
+                <div className="data">{data.main.humidity}%</div>
+              </>
+            ) : (
+              <div className="data-name">No humidity data available</div>
+            )}
           </div>
 
           {/* Another way to do it */}
