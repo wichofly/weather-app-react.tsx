@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './WeatherApp.css';
 
 import sunny from '../assets/sunny.png';
@@ -25,6 +25,16 @@ const WeatherApp = () => {
   const [location, setLocation] = useState('');
 
   const api_key = 'b46d2bff9c7d8d90bbd5bcbb7e286719';
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const baseURL = `https://api.openweathermap.org/data/2.5/weather?q=Apopa&units=Metric&appid=${api_key}`;
+      const response = await fetch(baseURL);
+      const data = await response.json();
+      setData(data);
+    };
+    fetchData();
+  }, [data]);
 
   // const handleLocationChange = (event: ChangeEvent<HTMLInputElement>) => {
   //   setLocation(event.target.value);
