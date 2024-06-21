@@ -54,7 +54,9 @@ const WeatherApp = () => {
 
         <div className="weather">
           <img src={sunny} alt="sunny" />
-          <div className="weather-type">Clear</div>
+          <div className="weather-type">
+            {data.weather ? data.weather[0].main : 'Weather'}
+          </div>
           <div className="temp">
             {data.main ? `${Math.floor(data.main?.temp)}` : '0'}°C
           </div>
@@ -68,7 +70,7 @@ const WeatherApp = () => {
           <div className="humidity">
             <div className="data-name">Humidity</div>
             <i>💧</i>
-            <div className="data">34%</div>
+            <div className="data">{data.main?.humidity}%</div>
           </div>
 
           <div className="wind">
