@@ -5,6 +5,8 @@ import sunny from '../assets/sunny.png';
 import cloudy from '../assets/cloudy.png';
 import rainy from '../assets/rainy.png';
 import snowy from '../assets/snowy.png';
+import hazy from '../assets/hazy.png';
+import misty from '../assets/misty.png';
 
 interface Prop {
   name: string;
@@ -59,6 +61,20 @@ const WeatherApp = () => {
     }
   };
 
+  const weatherImages: { [key: string]: string } = {
+    Clear: sunny,
+    Clouds: cloudy,
+    Rain: rainy,
+    Snow: snowy,
+    Haze: hazy,
+    Mist: misty,
+  };
+
+  const weatherImage =
+    data && data.weather
+      ? weatherImages[data.weather[0].main]
+      : 'How is the weather?';
+
   return (
     <div className="container">
       <div className="weather-app">
@@ -80,7 +96,7 @@ const WeatherApp = () => {
         </div>
 
         <div className="weather">
-          <img src={sunny} alt="sunny" />
+          <img src={weatherImage} alt="type of weather" />
           <div className="weather-type">
             {data && data.weather ? data.weather[0].main : 'Weather'}
           </div>
