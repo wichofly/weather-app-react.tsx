@@ -76,8 +76,8 @@ const WeatherApp = () => {
       : 'How is the weather?';
 
   const bgImages = {
-    Clear: 'linear-gradient(to right, #FFD700, #FF4500)',
-    Clouds: 'linear-gradient(to right, #D3E9FF , #FFFFFF )',
+    Clear: 'linear-gradient(to right, #FFDAB9, #FF9C00)',
+    Clouds: 'linear-gradient(to right, #D3E9FF, #FFFFFF )',
     Rain: 'linear-gradient(to right, #a18cd1, #fbc2eb)',
     Snow: 'linear-gradient(to right, #83a4d4, #b6fbff)',
     Haze: 'linear-gradient(to right, #3E5151, #DECBA4)',
@@ -87,11 +87,19 @@ const WeatherApp = () => {
   const bgImage =
     data && data.weather
       ? bgImages[data.weather[0].main as keyof typeof bgImages]
-      : 'linear-gradient(to right, #FFD700, #FF4500)';
+      : 'linear-gradient(to right, #FFDAB9, #FF9C00)';
 
   return (
     <div className="container" style={{ background: bgImage }}>
-      <div className="weather-app">
+      <div
+        className="weather-app"
+        style={{
+          background:
+            bgImage && bgImage.replace
+              ? bgImage.replace('to right', 'to top')
+              : 'linear-gradient(to right, #FFDAB9, #FF9C00)',
+        }}
+      >
         <div className="search">
           <div className="search-top">
             <i className="fa-solid fa-location-dot"></i>
