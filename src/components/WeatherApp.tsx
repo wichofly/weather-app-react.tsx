@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import './WeatherApp.css';
+import { fetchWeatherData } from '../service/api-client'; // Import the fetchWeatherData function
 
 import sunny from '../assets/sunny.png';
 import cloudy from '../assets/cloudy.png';
@@ -29,38 +30,32 @@ const WeatherApp = () => {
   const [location, setLocation] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
 
-  const api_key = 'b46d2bff9c7d8d90bbd5bcbb7e286719';
-
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      const baseURL = `https://api.openweathermap.org/data/2.5/weather?q=Berlin&units=Metric&appid=${api_key}`;
-      const response = await fetch(baseURL);
-      const data = await response.json();
-      setData(data);
+      try {
+        const baseUrl = await fetchWeatherData('Apopa');
+        setData({ ...baseUrl, notFound: false });
+      } catch (error) {
+        console.error('Error fetching weather data:', error);
+      }
       setLoading(false);
     };
     fetchData();
   }, []);
 
-  // const handleLocationChange = (event: ChangeEvent<HTMLInputElement>) => {
-  //   setLocation(event.target.value);
-  // };
-
   const apiUrl = async () => {
     // Check if location is empty or contains only whitespace
     if (!location.trim()) return;
 
-    const baseURL = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=Metric&appid=${api_key}`;
-    const response = await fetch(baseURL);
-    const searchData = await response.json();
-    console.log(searchData);
-    if (searchData.cod !== '200') {
-      // Handle the case when the location is not found
-      setData({ notFound: true });
-    } else {
-      setData(searchData);
+    setLoading(true);
+    try {
+      const searchData = await fetchWeatherData(location);
+      setData({ ...searchData, notFound: false });
       setLocation('');
+    } catch (error) {
+      console.error('Error fetching weather data:', error);
+      setData({ notFound: true });
     }
     setLoading(false);
   };
