@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react';
+import useUser from '../components/Hooks/useUser';
 import './WeatherApp.css';
-import { fetchWeatherData } from '../service/api-client'; // Import the fetchWeatherData function
 
 import sunny from '../assets/sunny.png';
 import cloudy from '../assets/cloudy.png';
@@ -10,60 +9,14 @@ import hazy from '../assets/hazy.png';
 import misty from '../assets/misty.png';
 import loadingGif from '../assets/loading.gif';
 
-interface Prop {
-  name?: string;
-  main?: {
-    temp: number;
-    humidity: number;
-  };
-  weather?: {
-    main: string;
-  }[];
-  wind?: {
-    speed: number;
-  };
-  notFound?: boolean;
-}
-
 const WeatherApp = () => {
-  const [data, setData] = useState<Prop | null>(null);
-  const [location, setLocation] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(false);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const baseUrl = await fetchWeatherData('Apopa');
-        setData({ ...baseUrl, notFound: false });
-      } catch (error) {
-        console.error('Error fetching weather data:', error);
-      }
-      setLoading(false);
-    };
-    fetchData();
-  }, []);
-
-  const apiUrl = async () => {
-    // Check if location is empty or contains only whitespace
-    if (!location.trim()) return;
-
-    setLoading(true);
-    try {
-      const searchData = await fetchWeatherData(location);
-      setData({ ...searchData, notFound: false });
-      setLocation('');
-    } catch (error) {
-      console.error('Error fetching weather data:', error);
-      setData({ notFound: true });
-    }
-    setLoading(false);
-  };
+  const { data, location, setLocation, loading, updateWeather } =
+    useUser('Apopa');
 
   // Use Enter to see location
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      apiUrl();
+      updateWeather(location);
     }
   };
 
@@ -129,7 +82,7 @@ const WeatherApp = () => {
               onChange={(e) => setLocation(e.target.value)}
               onKeyDown={handleKeyDown}
             />
-            <i onClick={apiUrl}>🔍</i>
+            <i onClick={() => updateWeather(location)}>🔍</i>
           </div>
         </div>
 
