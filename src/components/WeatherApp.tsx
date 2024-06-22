@@ -7,36 +7,41 @@ import rainy from '../assets/rainy.png';
 import snowy from '../assets/snowy.png';
 import hazy from '../assets/hazy.png';
 import misty from '../assets/misty.png';
+import loadingGif from '../assets/loading.gif';
 
 interface Prop {
-  name: string;
-  main: {
+  name?: string;
+  main?: {
     temp: number;
     humidity: number;
   };
-  weather: {
+  weather?: {
     main: string;
   }[];
-  wind: {
+  wind?: {
     speed: number;
   };
+  notFound?: boolean;
 }
 
 const WeatherApp = () => {
   const [data, setData] = useState<Prop | null>(null);
-  const [location, setLocation] = useState('');
+  const [location, setLocation] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
 
   const api_key = 'b46d2bff9c7d8d90bbd5bcbb7e286719';
 
   useEffect(() => {
     const fetchData = async () => {
-      const baseURL = `https://api.openweathermap.org/data/2.5/weather?q=Apopa&units=Metric&appid=${api_key}`;
+      setLoading(true);
+      const baseURL = `https://api.openweathermap.org/data/2.5/weather?q=Berlin&units=Metric&appid=${api_key}`;
       const response = await fetch(baseURL);
       const data = await response.json();
       setData(data);
+      setLoading(false);
     };
     fetchData();
-  }, [data]);
+  }, []);
 
   // const handleLocationChange = (event: ChangeEvent<HTMLInputElement>) => {
   //   setLocation(event.target.value);
@@ -50,8 +55,14 @@ const WeatherApp = () => {
     const response = await fetch(baseURL);
     const searchData = await response.json();
     console.log(searchData);
-    setData(searchData);
-    setLocation('');
+    if (searchData.cod !== '200') {
+      // Handle the case when the location is not found
+      setData({ notFound: true });
+    } else {
+      setData(searchData);
+      setLocation('');
+    }
+    setLoading(false);
   };
 
   // Use Enter to see location
@@ -127,15 +138,22 @@ const WeatherApp = () => {
           </div>
         </div>
 
-        <div className="weather">
-          <img src={weatherImage} alt="type of weather" />
-          <div className="weather-type">
-            {data && data.weather ? data.weather[0].main : 'Weather'}
+        {loading ? (
+          <img className="loader" src={loadingGif} alt="loading" />
+        ) : data?.notFound ? (
+          <div className="not-found">Not Found 🤦‍♂️</div>
+        ) : null}
+        {data && !data.notFound && (
+          <div className="weather">
+            <img src={weatherImage} alt="type of weather" />
+            <div className="weather-type">
+              {data.weather ? data.weather[0].main : 'Weather'}
+            </div>
+            <div className="temp">
+              {data.main ? `${Math.floor(data.main.temp)}` : '0'}°C
+            </div>
           </div>
-          <div className="temp">
-            {data && data.main ? `${Math.floor(data.main.temp)}` : '0'}°C
-          </div>
-        </div>
+        )}
 
         <div className="weather-date">
           <p>{getCurrentDate()}</p>
@@ -154,7 +172,6 @@ const WeatherApp = () => {
             )}
           </div>
 
-          {/* Another way to do it */}
           <div className="wind">
             {data && data.wind ? (
               <>
