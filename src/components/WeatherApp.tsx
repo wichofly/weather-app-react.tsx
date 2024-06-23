@@ -3,6 +3,7 @@ import './WeatherApp.css';
 
 import loadingGif from '../assets/loading.gif';
 import WeatherDetails from './WeatherDetails';
+import SearchBar from './SearchBar';
 
 const WeatherApp = () => {
   const { data, location, setLocation, loading, updateWeather } =
@@ -50,22 +51,12 @@ const WeatherApp = () => {
               : 'linear-gradient(to right, #FFDAB9, #FF9C00)',
         }}
       >
-        <div className="search">
-          <div className="search-top">
-            <i className="fa-solid fa-location-dot"></i>
-            <div className="location">{(data && data.name) || 'Location'}</div>
-          </div>
-          <div className="search-bar">
-            <input
-              type="text"
-              placeholder="Enter city name"
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              onKeyDown={handleKeyDown}
-            />
-            <i onClick={() => updateWeather(location)}>🔍</i>
-          </div>
-        </div>
+        <SearchBar
+          location={location}
+          setLocation={setLocation}
+          updateWeather={updateWeather}
+          handleKeyDown={handleKeyDown}
+        />
 
         {loading ? (
           <img className="loader" src={loadingGif} alt="loading" />
