@@ -1,15 +1,14 @@
 import useUser from '../components/Hooks/useUser';
 import './WeatherApp.css';
-
-import loadingGif from '../assets/loading.gif';
 import WeatherDetails from './WeatherDetails';
 import SearchBar from './SearchBar';
+import Loading from './Loading';
+import NotFound from './NotFound';
 
 const WeatherApp = () => {
   const { data, location, setLocation, loading, updateWeather } =
     useUser('Apopa');
 
-  // Use Enter to see location
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       updateWeather(location);
@@ -59,11 +58,10 @@ const WeatherApp = () => {
         />
 
         {loading ? (
-          <img className="loader" src={loadingGif} alt="loading" />
+          <Loading />
         ) : data?.notFound ? (
-          <div className="not-found">Not Found 🤦‍♂️</div>
-        ) : null}
-        {data && !data.notFound ? (
+          <NotFound />
+        ) : data && !data.notFound ? (
           <WeatherDetails data={data} getCurrentDate={getCurrentDate} />
         ) : null}
       </div>
