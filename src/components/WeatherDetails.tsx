@@ -1,3 +1,5 @@
+import { WeatherData } from '../service/types';
+
 import sunny from '../assets/sunny.png';
 import cloudy from '../assets/cloudy.png';
 import rainy from '../assets/rainy.png';
@@ -5,20 +7,6 @@ import snowy from '../assets/snowy.png';
 import hazy from '../assets/hazy.png';
 import misty from '../assets/misty.png';
 
-interface WeatherData {
-  name?: string;
-  main?: {
-    temp: number;
-    humidity: number;
-  };
-  weather?: {
-    main: string;
-  }[];
-  wind?: {
-    speed: number;
-  };
-  notFound?: boolean;
-}
 
 interface Prop {
   data: WeatherData | null;

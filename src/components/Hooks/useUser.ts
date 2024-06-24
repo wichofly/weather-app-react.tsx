@@ -1,20 +1,6 @@
 import { useState, useEffect } from 'react';
 import { fetchWeatherData } from '../../service/api-client';
-
-interface WeatherData {
-  name?: string;
-  main?: {
-    temp: number;
-    humidity: number;
-  };
-  weather?: {
-    main: string;
-  }[];
-  wind?: {
-    speed: number;
-  };
-  notFound?: boolean;
-}
+import { WeatherData } from '../../service/types';
 
 const useUsers = (initialLocation: string) => {
   const [data, setData] = useState<WeatherData | null>(null);

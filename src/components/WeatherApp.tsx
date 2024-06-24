@@ -52,6 +52,7 @@ const WeatherApp = () => {
       >
         <SearchBar
           location={location}
+          data={data}
           setLocation={setLocation}
           updateWeather={updateWeather}
           handleKeyDown={handleKeyDown}

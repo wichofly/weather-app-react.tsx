@@ -1,5 +1,8 @@
+import { WeatherData } from "../service/types";
+
 interface Prop {
   location: string;
+  data: WeatherData | null;
   setLocation: (location: string) => void;
   updateWeather: (location: string) => void;
   handleKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
@@ -7,6 +10,7 @@ interface Prop {
 
 const SearchBar = ({
   location,
+  data,     
   setLocation,
   updateWeather,
   handleKeyDown,
@@ -15,7 +19,7 @@ const SearchBar = ({
     <div className="search">
       <div className="search-top">
         <i className="fa-solid fa-location-dot"></i>
-        <div className="location">{location || 'Location'}</div>
+        <div className="location">{data?.name || 'Location'}</div>
       </div>
       <div className="search-bar">
         <input
