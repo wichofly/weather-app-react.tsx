@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { fetchWeatherData } from '../../service/api-client';
 import { WeatherData } from '../../service/types';
 
-const useUsers = (initialLocation: string) => {
+const useUser = (initialLocation: string) => {
   const [data, setData] = useState<WeatherData | null>(null);
   const [location, setLocation] = useState<string>(initialLocation);
   const [loading, setLoading] = useState<boolean>(false);
@@ -46,4 +46,4 @@ const useUsers = (initialLocation: string) => {
   };
 };
 
-export default useUsers;
+export default useUser;
