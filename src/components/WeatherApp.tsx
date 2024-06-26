@@ -1,4 +1,4 @@
-import useUser from '../components/Hooks/useUser';
+import useUser from '../Hooks/useUser';
 import './WeatherApp.css';
 import WeatherDetails from './WeatherDetails';
 import SearchBar from './SearchBar';
