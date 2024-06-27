@@ -23,7 +23,7 @@ const useUser = (initialLocation: string) => {
   }, [initialLocation]);
 
   const updateWeather = async (newLocation: string) => {
-    if (!newLocation.trim()) return;
+    if (!newLocation.trim()) return; //It helps to ensure that the user has entered a valid location value and prevents unnecessary API calls or processing if the input is empty or only contains whitespace characters.
 
     setLoading(true);
     try {
