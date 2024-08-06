@@ -1,12 +1,11 @@
 import axios from 'axios';
 
-const api_key = 'b46d2bff9c7d8d90bbd5bcbb7e286719';
-
 const apiClient = axios.create({
   baseURL: 'https://api.openweathermap.org/data/2.5/',
 });
 
 export const fetchWeatherData = async (location: string) => {
+  const api_key = import.meta.env.VITE_API_KEY;
   const response = await apiClient.get(`weather`, {
     params: {
       q: location,
@@ -22,6 +21,6 @@ export const fetchWeatherData = async (location: string) => {
 
 /**
  * It can't set location directly in the "axios.create" because it needs to be passed dynamically. Instead, create a function that makes the request with the necessary parameters.
- * 
- * "return response.data" : This line of code instructs the function to return the  data  property from the  response  object. When this function is called, it will provide the  data  part of the response object as the return value. 
+ *
+ * "return response.data" : This line of code instructs the function to return the  data  property from the  response  object. When this function is called, it will provide the  data  part of the response object as the return value.
  */

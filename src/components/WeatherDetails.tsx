@@ -7,7 +7,6 @@ import snowy from '../assets/snowy.png';
 import hazy from '../assets/hazy.png';
 import misty from '../assets/misty.png';
 
-
 interface Prop {
   data: WeatherData | null;
   getCurrentDate: () => string;
